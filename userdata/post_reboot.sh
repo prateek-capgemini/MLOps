@@ -37,7 +37,7 @@ else
 
     # Install PyTorch version
     echo "Installing PyTorch version $PYTORCH_VERSION"
-    pip3 install -f "torch $PYTORCH_VERSION"                   #pip3 added #prateek
+    pip3 install "torch $PYTORCH_VERSION"                   #pip3 added #prateek
 
     # Display the torch installed version
     echo "Installed torch version"

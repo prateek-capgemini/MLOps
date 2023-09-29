@@ -2,7 +2,7 @@ name: EC2 Management Workflow
 
 on:
   push:
-    branches: ["demo_testing"]
+    branches: ["main"]
 
 env:
   region: "us-west-2"
@@ -16,63 +16,53 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.10.8
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10.8
 
-      - name: Set AWS credentials from secrets
-        run: |
-          echo "Setting AWS credentials as environment variables"
-          export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-          export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-          export AWS_SESSION_KEY=$AWS_SESSION_TOKEN
+    - name: Set AWS credentials from secrets
+      run: |
+        echo "Setting AWS credentials as environment variables"
+        export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+        export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+        export AWS_SESSION_KEY=$AWS_SESSION_TOKEN
 
 
-      - name: Install dependencies
-        run: |
-          pip install boto3
-          pip install pillow
-          pip install pyyaml
-          #apt install jq
+    - name: Install dependencies
+      run: |
+        pip install boto3
+        pip install pillow
+        pip install pyyaml
+        #apt install jq
 
-      - name: Read YAML file
-        uses: pietrobolcato/action-read-yaml@1.0.0
-        id: read_yaml_file
-        with:
-          config: ${{ github.workspace }}/config.yaml
-        
-      - name: use-yaml-file
-        run: |
-          echo InstanceName is : ${{ steps.read_yaml_file.outputs['Instance_Name'] }}
-          echo InstanceId is : ${{ steps.read_yaml_file.outputs['Instance_id'] }}
-          INSTANCE_ID="${{ steps.read_yaml_file.outputs['Instance_id'] }}"
-          INSTANCE_NAME="${{ steps.read_yaml_file.outputs['Instance_Name'] }}"       
+    - name: Read YAML file
+      uses: pietrobolcato/action-read-yaml@1.0.0
+      id: read_yaml_file
+      with:
+        config: ${{ github.workspace }}/config.yaml
 
-      - name: Run Wrapper Script
-        id: get_action
-        run: echo "::set-output name=action::$(python wrapper.py)"
+    - name: use-yaml-file
+      run: "echo InstanceName is : ${{ steps.read_yaml_file.outputs['Instance_Name'] }}\necho InstanceId is : ${{ steps.read_yaml_file.outputs['Instance_id'] }}\nINSTANCE_ID=\"${{ steps.read_yaml_file.outputs['Instance_id'] }}\"\nINSTANCE_NAME=\"${{ steps.read_yaml_file.outputs['Instance_Name'] }}\"       \n#magic___^_^___line\n"
+    - name: Run Wrapper Script
+      id: get_action
+      run: echo "::set-output name=action::$(python wrapper.py)"
 
-      - name: Create Instance
-        if: steps.get_action.outputs.action == 'CREATE'
-        run: |
-          echo "Spinning up the instance with the provided configuration."
-          terraform init
-          terraform plan
-          terraform apply -auto-approve 
+    - name: Create Instance
+      if: steps.get_action.outputs.action == 'CREATE'
+      run: "echo \"Spinning up the instance with the provided configuration.\"\nterraform init\nterraform plan\nterraform apply -auto-approve \n#magic___^_^___line\n"
+    - name: Terminate Instance
+      if: steps.get_action.outputs.action == 'TERMINATE'
+      run: |
+        # echo "Terminating the instance which has been passed by you as instance ID"
+        INSTANCE_ID="${{ steps.read_yaml_file.outputs['Instance_id'] }}"
+        INSTANCE_NAME="${{ steps.read_yaml_file.outputs['Instance_Name'] }}"
+        aws ec2 terminate-instances --instance-ids "$INSTANCE_ID"
+        # terraform init
+        # terraform plan
+        # terraform destroy -auto-approve
 
-      - name: Terminate Instance
-        if: steps.get_action.outputs.action == 'TERMINATE'
-        run: |
-          # echo "Terminating the instance which has been passed by you as instance ID"
-          INSTANCE_ID="${{ steps.read_yaml_file.outputs['Instance_id'] }}"
-          INSTANCE_NAME="${{ steps.read_yaml_file.outputs['Instance_Name'] }}"
-          aws ec2 terminate-instances --instance-ids "$INSTANCE_ID"
-          # terraform init
-          # terraform plan
-          # terraform destroy -auto-approve
-        
-        
+

@@ -7,14 +7,19 @@
 echo "Updating package list and installing necessary packages..."
 sudo su #####################prateek##################
 sudo apt-get update -y
+sudo apt update        #prateek
+sudo apt upgrade       #prateek
 sudo apt-get install -y alsa-utils
 sudo apt install -y python3-pip
 sudo apt-get install -y ubuntu-drivers-common
+sudo ubuntu-drivers install --gpgpu nvidia:525-server #prateek
+sudo apt upgrade       #prateek
 
 # List available Ubuntu drivers and install the recommended driver
 echo "Listing available Ubuntu drivers and installing the recommended driver..."
 sudo ubuntu-drivers list
 sudo ubuntu-drivers autoinstall
+sudo apt upgrade       #prateek
 
 
 # Reboot the system

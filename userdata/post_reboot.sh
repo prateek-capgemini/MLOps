@@ -6,7 +6,8 @@ sudo su ##################prateek####################
 if ! command -v yq &> /dev/null; then
     echo "yq is not installed. Installing..."
     sudo apt update
-    sudo apt install yq -y
+    sudo apt upgrade               #prateek
+    sudo snap install yq           # sudo snap install yq #prateek
 fi
 
 # Extract specific values from the YAML file
@@ -36,7 +37,7 @@ else
 
     # Install PyTorch version
     echo "Installing PyTorch version $PYTORCH_VERSION"
-    pip install "torch==$PYTORCH_VERSION"
+    pip3 install -f "torch $PYTORCH_VERSION"                   #pip3 added #prateek
 
     # Display the torch installed version
     echo "Installed torch version"
@@ -48,3 +49,9 @@ else
     echo "Running the torch validation script..."
     python3 ./userdata/torch_validation.py
 fi
+
+# Reboot the system
+echo "Rebooting the system..."
+sudo reboot
+
+sleep 120

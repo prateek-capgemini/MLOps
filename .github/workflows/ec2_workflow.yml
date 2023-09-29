@@ -2,7 +2,7 @@ name: EC2 Management Workflow
 
 on:
   push:
-    branches: ["demo_testing"]
+    branches: ["main"]
 
 env:
   region: "us-west-2"

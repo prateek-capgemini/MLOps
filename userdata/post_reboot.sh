@@ -49,9 +49,3 @@ else
     echo "Running the torch validation script..."
     python3 ./userdata/torch_validation.py
 fi
-
-# Reboot the system
-echo "Rebooting the system..."
-sudo reboot
-
-sleep 120

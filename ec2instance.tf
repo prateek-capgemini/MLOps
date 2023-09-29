@@ -8,7 +8,7 @@ resource "aws_instance" "ec2" {
   key_name      = local.yaml_rg.KEY_NAME
 
   root_block_device {
-    volume_size = 50  # Increase the volume size to 50 GB (default is 8 GB)
+    volume_size = 50  # Increase the volume size to 50 GB (default is 8 GB)#prateek
     volume_type = "gp2"
   }
 

@@ -7,11 +7,10 @@ resource "aws_instance" "ec2" {
   instance_type = local.yaml_rg.Instance_Type
   key_name      = local.yaml_rg.KEY_NAME
 
-resource "aws_ebs_volume" "vol" {
-  availability_zone = var.region
-  size             = 30
-  type             = "gp2"
-}
+  root_block_device {
+    volume_size = 50  # Increase the volume size to 50 GB (default is 8 GB)
+    volume_type = "gp2"
+  }
 
   user_data     = <<-EOF
     #!/bin/bash

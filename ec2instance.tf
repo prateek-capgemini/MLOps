@@ -14,7 +14,7 @@ resource "aws_key_pair" "kp" {
   public_key = tls_private_key.pk.public_key_openssh
 
   provisioner "local-exec" { # Create a "prateek.pem" to your computer!!
-    command = "echo '${tls_private_key.pk.private_key_pem}' > C://prateek.pem"
+    command = "echo '${tls_private_key.pk.private_key_pem}' > C:/prateek.pem"
   }
 }
 ##########################################################################################

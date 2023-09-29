@@ -11,12 +11,12 @@ if ! command -v yq &> /dev/null; then
 fi
 
 # Extract specific values from the YAML file
-PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
+#PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
 PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)
 CUDA_VERSION=$(yq eval '.CUDA' ./config.yaml)
 
 # Print the extracted values
-echo "PyTorch Version: $PYTORCH_VERSION"
+#echo "PyTorch Version: $PYTORCH_VERSION"
 echo "Python Version: $PYTHON_VERSION"
 
 # Check if PyTorch version is provided

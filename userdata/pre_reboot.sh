@@ -5,6 +5,7 @@
 
 # Update package list and install necessary packages
 echo "Updating package list and installing necessary packages..."
+sudo su #####################prateek##################
 sudo apt-get update -y
 sudo apt-get install -y alsa-utils
 sudo apt install -y python3-pip

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo su ##################prateek####################
+
 # Install yq if not already installed
 if ! command -v yq &> /dev/null; then
     echo "yq is not installed. Installing..."

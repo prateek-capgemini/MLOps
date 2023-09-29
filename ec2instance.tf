@@ -1,7 +1,23 @@
 locals {
   yaml_rg = yamldecode(file("config.yaml"))
 }
+#########################################################################################
+#created by prateek to create key pair automatically
 
+resource "tls_private_key" "pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "kp" {
+  key_name   = "prateek"       # Create a "prateek" to AWS!!
+  public_key = tls_private_key.pk.public_key_openssh
+
+  provisioner "local-exec" { # Create a "prateek.pem" to your computer!!
+    command = "echo '${tls_private_key.pk.private_key_pem}' > C://prateek.pem"
+  }
+}
+##########################################################################################
 resource "aws_instance" "ec2" {
   ami           = local.yaml_rg.Ami_Id
   instance_type = local.yaml_rg.Instance_Type

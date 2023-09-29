@@ -7,12 +7,11 @@ resource "aws_instance" "ec2" {
   instance_type = local.yaml_rg.Instance_Type
   key_name      = local.yaml_rg.KEY_NAME
 
-  root_block_device {
-    volume_size = 30 # in GB <<----- I increased this! prateek
-    volume_type = "gp3"
-    encrypted   = true
-    kms_key_id  = data.aws_kms_key.customer_master_key.arn
-  }
+resource "aws_ebs_volume" "vol" {
+  availability_zone = var.region
+  size             = 30
+  type             = "gp2"
+}
 
   user_data     = <<-EOF
     #!/bin/bash

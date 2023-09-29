@@ -37,7 +37,8 @@ else
 
     # Install PyTorch version
     echo "Installing PyTorch version $PYTORCH_VERSION"
-    pip3 install "torch $PYTORCH_VERSION"                   #pip3 added #prateek
+    #pip3 install "torch $PYTORCH_VERSION"                   #pip3 added #prateek
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu     #prateek
 
     # Display the torch installed version
     echo "Installed torch version"

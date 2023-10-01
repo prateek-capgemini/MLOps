@@ -49,7 +49,7 @@ else
     #pip3 install "torch $PYTORCH_VERSION"                   #pip3 added #prateek
 
     # Display the torch installed version
-    echo "Installed torch version"
+    echo "Installed torch version "
     pip show torch | grep Version
     python --version
     python3 --version

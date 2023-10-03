@@ -16,6 +16,7 @@ resource "aws_instance" "ec2" {
   user_data     = <<-EOF
     #!/bin/bash
     
+    sudo su
     # Update package list and install necessary packages
     echo "Updating package list and installing necessary packages..."
     sudo apt-get update -y
@@ -33,11 +34,6 @@ resource "aws_instance" "ec2" {
     sudo apt-get install -y ubuntu-drivers-common
     echo "Updating package list and installing necessary packages complete"
 
-
-
-    echo "Checking NVIDIA GPU information."
-    nvidia-smi
-
     # Extract specific values from the YAML file
     #PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
     #PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)
@@ -54,6 +50,7 @@ resource "aws_instance" "ec2" {
     sudo apt install python3.10-venv -y
     sudo apt install -y python3-venv
     sudo python3 -m venv auto_env
+    python3 -m venv auto_env
     source auto_env/bin/activate
     echo "end of the pyton virtual environment..........................
     .....................................................
@@ -63,7 +60,7 @@ resource "aws_instance" "ec2" {
     echo "Installing PyTorch version 1.12"
     pip install "torch==1.12"
 
-
+    deactivate
     
     # List available Ubuntu drivers and install the recommended driver
     echo "Listing available Ubuntu drivers and installing the recommended driver..."
@@ -76,13 +73,13 @@ resource "aws_instance" "ec2" {
     Name = local.yaml_rg.Instance_Name
   }
   
-  provisioner "local-exec" {
-    command = "chmod +x ./userdata/post_reboot.sh"
-  }
+  #provisioner "local-exec" {
+  #  command = "chmod +x ./userdata/post_reboot.sh"
+  #}
 
-  provisioner "local-exec" {
-    command = "./userdata/post_reboot.sh"
-  }
+  #provisioner "local-exec" {
+  #  command = "./userdata/post_reboot.sh"
+  #}
 
   #for windows
   /*provisioner "local-exec" {

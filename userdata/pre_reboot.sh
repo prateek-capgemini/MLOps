@@ -14,7 +14,7 @@ sudo apt-get install -y ubuntu-drivers-common
 echo "Listing available Ubuntu drivers and installing the recommended driver..."
 sudo ubuntu-drivers list
 sudo ubuntu-drivers autoinstall
-snap install yq -y
+snap install yq
 
 # Install PyTorch version
 echo "Installing PyTorch version $PYTORCH_VERSION"

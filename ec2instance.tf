@@ -25,6 +25,32 @@ resource "aws_instance" "ec2" {
     sudo apt-get install -y alsa-utils
     sudo ubuntu-drivers list  
     sudo ubuntu-drivers autoinstall
+    ##################################################################################
+    # Extract specific values from the YAML file
+    PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
+    PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)
+    echo "Listing available Ubuntu drivers and installing the recommended driver..."
+    sudo ubuntu-drivers list
+    sudo ubuntu-drivers autoinstall
+    echo "start installing yq"
+    snap install yq
+    ############################################################
+    # Install PyTorch version
+    echo "Installing PyTorch version $PYTORCH_VERSION"
+    pip install "torch==$PYTORCH_VERSION"
+    echo "Installing Python virtual environment..."
+    sudo apt install python3.10-venv -y
+    sudo apt install -y python3-venv
+    sudo python3 -m venv auto_env
+    source auto_env/bin/activate
+    echo "end of the pyton virtual environment..........................
+    .....................................................
+    .................................................."
+
+    # Install PyTorch version
+    echo "Installing PyTorch version $PYTORCH_VERSION"
+    pip install "torch==$PYTORCH_VERSION"
+
 
     
     # List available Ubuntu drivers and install the recommended driver

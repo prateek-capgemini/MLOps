@@ -21,10 +21,10 @@ echo "Installing PyTorch version $PYTORCH_VERSION"
 pip install "torch==$PYTORCH_VERSION"
 
 # Reboot the system
-#echo "Rebooting the system..."
-#sudo reboot
+echo "Rebooting the system..."
+sudo reboot
 
-#sleep 120
+sleep 120
 #####################################################################################################
 
 # Install yq if not already installed

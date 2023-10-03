@@ -23,7 +23,12 @@ echo "CUDA Version: $CUDA_VERSION"
 
 if [$CUDA_VERSION=="11.3"]; then
     echo "Installing CUDA: $CUDA_VERSION ....."
-    sudo apt install cuda-11-3
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+    sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+    sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+    sudo apt-get update
+    sudo apt-get -y install cuda
 else
     echo "Provided CUDA version not supported "
 fi
@@ -52,9 +57,6 @@ fi
 nvidia-smi
 nvcc -V
 
-# install Pytorch
-pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
-
 ##########################################################
 
 
@@ -78,7 +80,7 @@ else
     # Install PyTorch version
     echo "Installing PyTorch version $PYTORCH_VERSION"
     if [ $PYTORCH_VERSION=="1.12" ]; then
-        pip install "torch==$PYTORCH_VERSION+cu113" torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+        pip install "torch==$PYTORCH_VERSION.1+cu113" torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
     else
         echo " Provided PYTorch version not supported..."
     fi

@@ -33,6 +33,14 @@ resource "aws_instance" "ec2" {
     sudo apt-get install -y ubuntu-drivers-common
     echo "Updating package list and installing necessary packages complete"
 
+    echo "Rebooting the system..."
+    sudo reboot
+
+    sleep 120
+
+    echo "Checking NVIDIA GPU information after reboot..."
+    nvidia-smi
+
     # Extract specific values from the YAML file
     #PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
     #PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)

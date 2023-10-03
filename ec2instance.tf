@@ -26,9 +26,16 @@ resource "aws_instance" "ec2" {
     sudo ubuntu-drivers list  
     sudo ubuntu-drivers autoinstall
     ##################################################################################
+    echo "Updating package list and installing necessary packages..."
+    sudo apt-get update -y
+    sudo apt-get install -y alsa-utils
+    sudo apt install -y python3-pip
+    sudo apt-get install -y ubuntu-drivers-common
+    echo "Updating package list and installing necessary packages complete"
+
     # Extract specific values from the YAML file
-    PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
-    PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)
+    #PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
+    #PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)
     echo "Listing available Ubuntu drivers and installing the recommended driver..."
     sudo ubuntu-drivers list
     sudo ubuntu-drivers autoinstall
@@ -36,8 +43,8 @@ resource "aws_instance" "ec2" {
     snap install yq
     ############################################################
     # Install PyTorch version
-    echo "Installing PyTorch version $PYTORCH_VERSION"
-    pip install "torch==$PYTORCH_VERSION"
+    echo "Installing PyTorch version 1.12"
+    pip install "torch==1.12"
     echo "Installing Python virtual environment..."
     sudo apt install python3.10-venv -y
     sudo apt install -y python3-venv
@@ -48,8 +55,8 @@ resource "aws_instance" "ec2" {
     .................................................."
 
     # Install PyTorch version
-    echo "Installing PyTorch version $PYTORCH_VERSION"
-    pip install "torch==$PYTORCH_VERSION"
+    echo "Installing PyTorch version 1.12"
+    pip install "torch==1.12"
 
 
     

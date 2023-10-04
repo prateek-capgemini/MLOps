@@ -35,6 +35,14 @@ resource "aws_instance" "ec2" {
     sudo apt install python3-dev python3-venv -y
     sudo apt install -y python3-dev python3-venv
 
+
+    echo "Increase Swap Space...."
+    sudo fallocate -l 2G /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+
+    echo "Building pyton virtual environment...."
     sudo python3 -m venv /auto_env
     cd /auto_env/bin/
     source activate
@@ -44,7 +52,9 @@ resource "aws_instance" "ec2" {
 
     # Install PyTorch version
     echo "Installing PyTorch version 1.12"
-    pip install torch==2.0.0+cu117 torchvision==0.15.1+cu117 torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu117
+    sudo su
+    # CUDA 11.3
+    conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
     #pip install "torch==1.12"
 
     deactivate

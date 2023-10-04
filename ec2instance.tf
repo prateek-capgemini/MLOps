@@ -86,6 +86,98 @@ resource "aws_instance" "ec2" {
     command = ".\\userdata\\post_reboot.sh"
   }*/
 }
+
+resource "aws_iam_policy" "example_policy" {
+  name        = "example-policy"
+  description = "An example IAM policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action   = [
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeVpcs",
+          "ec2:DescribeInstances",
+          "ec2:DescribeTags",
+          "ec2:ModifyNetworkInterfaceAttribute",
+          "ec2:DetachNetworkInterface",
+          "ec2:AttachNetworkInterface",
+          "s3:GetObject",
+          "s3:PutObject",
+        ],
+        Effect   = "Allow",
+        Resource = "*",
+      },
+      {
+        Action   = [
+          "ssm:CreateAssociation",
+          "ssm:UpdateAssociationStatus",
+          "ssm:CancelCommand",
+          "ssm:ListCommands",
+          "ssm:ListCommandInvocations",
+          "ssm:GetCommandInvocation",
+          "ssm:GetParametersByPath",
+          "ssm:GetParameters",
+        ],
+        Effect   = "Allow",
+        Resource = "*",
+      },
+      {
+        Action   = [
+          "cloudwatch:PutMetricData",
+        ],
+        Effect   = "Allow",
+        Resource = "*",
+      },
+      {
+        Action   = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+        ],
+        Effect   = "Allow",
+        Resource = "*",
+      },
+      {
+        Action   = [
+          "elasticloadbalancing:DescribeTargetGroups",
+          "elasticloadbalancing:DescribeTargetHealth",
+        ],
+        Effect   = "Allow",
+        Resource = "*",
+      },
+    ],
+  })
+}
+
+# Define an IAM role and attach the IAM policy to it
+resource "aws_iam_role" "example_role" {
+  name = "example-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "ec2.amazonaws.com",
+        },
+      },
+    ],
+  })
+}
+
+# Attach the IAM policy to the IAM role
+resource "aws_iam_policy_attachment" "example_attachment" {
+  policy_arn = aws_iam_policy.example_policy.arn
+  roles      = [aws_iam_role.example_role.name]
+}
 # resource "null_resource" "terminate_instances" {
 #    triggers = {
 #      instance_ids = join(",", concat(aws_instance.cpu_instance.*.id, aws_instance.gpu_instance.*.id))

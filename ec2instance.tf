@@ -48,6 +48,8 @@ resource "aws_instance" "ec2" {
 
     # Install PyTorch version
     echo "Installing PyTorch version 1.12"
+    ulimit -v unlimited
+    ulimit -m unlimited
     pip install "torch==1.12"
 
     deactivate

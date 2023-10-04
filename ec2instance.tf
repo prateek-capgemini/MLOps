@@ -38,7 +38,9 @@ resource "aws_instance" "ec2" {
     sudo apt install python3-dev python3-venv -y
     sudo apt install -y python3-dev python3-venv
     sudo python3 -m venv /auto_env
+
     python3 -m venv /auto_env
+    cd /
     source auto_env/bin/activate
     echo "end of the pyton virtual environment..........................
     .....................................................

@@ -75,13 +75,6 @@ resource "aws_instance" "ec2" {
   }*/
 }
 
-
-
-# Attach the IAM policy to the IAM role
-resource "aws_iam_policy_attachment" "example_attachment" {
-  policy_arn = aws_iam_policy.example_policy.arn
-  roles      = [aws_iam_role.example_role.name]
-}
 # resource "null_resource" "terminate_instances" {
 #    triggers = {
 #      instance_ids = join(",", concat(aws_instance.cpu_instance.*.id, aws_instance.gpu_instance.*.id))

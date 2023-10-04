@@ -37,7 +37,7 @@ resource "aws_instance" "ec2" {
 
 
     echo "Increase Swap Space...."
-    sudo fallocate -l 2G /swapfile
+    sudo fallocate -l 3G /swapfile
     sudo chmod 600 /swapfile
     sudo mkswap /swapfile
     sudo swapon /swapfile
@@ -54,7 +54,7 @@ resource "aws_instance" "ec2" {
     echo "Installing PyTorch version 1.12"
     sudo su
     # CUDA 11.3
-    conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
+    pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
     #pip install "torch==1.12"
 
     deactivate

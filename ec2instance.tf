@@ -31,13 +31,9 @@ resource "aws_instance" "ec2" {
     sudo apt-get update -y
 
     ############################################################
-    # Install PyTorch version
-    echo "Installing PyTorch version 1.12"
-    pip install "torch==1.12"
     echo "Installing Python virtual environment..."
     sudo apt install python3-dev python3-venv -y
     sudo apt install -y python3-dev python3-venv
-    sudo python3 -m venv /auto_env
 
     sudo python3 -m venv /auto_env
     cd /auto_env/bin/
@@ -48,9 +44,8 @@ resource "aws_instance" "ec2" {
 
     # Install PyTorch version
     echo "Installing PyTorch version 1.12"
-    ulimit -v unlimited
-    ulimit -m unlimited
-    pip install "torch==1.12"
+    pip install torch==2.0.0+cu117 torchvision==0.15.1+cu117 torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu117
+    #pip install "torch==1.12"
 
     deactivate
     

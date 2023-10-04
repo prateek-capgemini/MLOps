@@ -35,8 +35,8 @@ resource "aws_instance" "ec2" {
     echo "Installing PyTorch version 1.12"
     pip install "torch==1.12"
     echo "Installing Python virtual environment..."
-    sudo apt install python3.10-venv -y
-    sudo apt install -y python3-venv
+    sudo apt install python3-dev python3-venv -y
+    sudo apt install -y python3-dev python3-venv
     sudo python3 -m venv /auto_env
     python3 -m venv /auto_env
     source auto_env/bin/activate

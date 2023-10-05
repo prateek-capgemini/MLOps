@@ -50,7 +50,7 @@ def validate_create_instance(yaml_data):
     # Check PyTorch version
     pytorch_version = yaml_data.get("Pytorch")
     if pytorch_version:
-        valid_pytorch_versions = ["2.0", "1.13", "1.12", "1.11", "1.10", "1.9"]
+        valid_pytorch_versions = ["2.0", "1.13.0", "1.12", "1.11", "1.10", "1.9"]
         if pytorch_version not in valid_pytorch_versions:
             logger.error("Invalid PyTorch version provided. Please refer to the compatibility matrix below:")
             img = Image.open("versions.jpg")

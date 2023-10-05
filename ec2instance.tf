@@ -6,7 +6,11 @@ resource "aws_instance" "ec2" {
   ami           = local.yaml_rg.Ami_Id
   instance_type = local.yaml_rg.Instance_Type
   key_name      = local.yaml_rg.KEY_NAME
-
+  
+  root_block_device {
+    volume_size = 30  # Increase the volume size to 50 GB (default is 8 GB)
+    volume_type = "gp2"
+  }
 
   user_data     = <<-EOF
     #!/bin/bash

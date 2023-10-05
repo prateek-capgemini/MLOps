@@ -36,32 +36,32 @@ resource "aws_instance" "ec2" {
     sudo apt install -y python3-dev python3-venv
 
 
-    echo "Increase Swap Space...."
-    sudo fallocate -l 2G /swapfile
-    sudo chmod 600 /swapfile
-    sudo mkswap /swapfile
-    sudo swapon /swapfile
+    # echo "Increase Swap Space...."
+    # sudo fallocate -l 2G /swapfile
+    # sudo chmod 600 /swapfile
+    # sudo mkswap /swapfile
+    # sudo swapon /swapfile
 
-    echo "Building pyton virtual environment...."
-    sudo python3 -m venv /auto_env
-    cd /auto_env/bin/
-    source activate
-    echo "end of the pyton virtual environment..........................
-    .....................................................
-    .................................................."
+    # echo "Building pyton virtual environment...."
+    # sudo python3 -m venv /auto_env
+    # cd /auto_env/bin/
+    # source activate
+    # echo "end of the pyton virtual environment..........................
+    # .....................................................
+    # .................................................."
 
-    # Install PyTorch version
-    echo "Installing PyTorch version 1.12"
-    sudo su
-    # CUDA 11.3
-    pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
-    #pip install "torch==1.12"
+    # # Install PyTorch version
+    # echo "Installing PyTorch version 1.12"
+    # sudo su
+    # # CUDA 11.3
+    # pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+    # #pip install "torch==1.12"
 
-    deactivate
+    # deactivate
     
     # List available Ubuntu drivers and install the recommended driver
-    echo "Listing available Ubuntu drivers and installing the recommended driver..."
-    sudo modprobe nvidia
+    #echo "Listing available Ubuntu drivers and installing the recommended driver..."
+    #sudo modprobe nvidia
     
  
     EOF
@@ -70,13 +70,13 @@ resource "aws_instance" "ec2" {
     Name = local.yaml_rg.Instance_Name
   }
   
-  #provisioner "local-exec" {
-  #  command = "chmod +x ./userdata/post_reboot.sh"
-  #}
+  provisioner "local-exec" {
+    command = "chmod +x ./userdata/post_reboot.sh"
+  }
 
-  #provisioner "local-exec" {
-  #  command = "./userdata/post_reboot.sh"
-  #}
+  provisioner "local-exec" {
+    command = "./userdata/post_reboot.sh"
+  }
 
   #for windows
   /*provisioner "local-exec" {

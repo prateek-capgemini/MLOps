@@ -42,21 +42,6 @@ resource "aws_instance" "ec2" {
       sudo snap install yq
     fi
 
-    # Extract specific values from the YAML file
-    PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)
-    PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)
-    CUDA_VERSION=$(yq eval '.CUDA' ./config.yaml)
-
-    # Print the extracted values
-    echo "PyTorch Version: $PYTORCH_VERSION"
-    echo "Python Version: $PYTHON_VERSION"
-    echo "CUDA Version: $CUDA_VERSION"
-
-    if ! command -v yq &> /dev/null; then
-      echo "yq is not installed. Installing..."
-      sudo apt update
-      sudo snap install yq
-    fi
 
     # Extract specific values from the YAML file
     PYTORCH_VERSION=$(yq eval '.Pytorch' ./config.yaml)

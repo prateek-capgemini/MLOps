@@ -37,8 +37,8 @@ else
     .................................................."
 
     # Install PyTorch version
-
-    sudo ./userdata/cuda_version_validation.sh
+    chmod +x ./userdata/cuda_version_validation.sh
+    ./userdata/cuda_version_validation.sh
 
     #pip install "torch==$PYTORCH_VERSION"
 

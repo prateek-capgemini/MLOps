@@ -44,10 +44,10 @@ resource "aws_instance" "ec2" {
 
 
     # Extract specific values from the YAML file
-    PYTORCH_VERSION="2.0"   # $(yq eval '.Pytorch' ./config.yaml)
+    PYTORCH_VERSION="1.13"   # $(yq eval '.Pytorch' ./config.yaml)
     # PYTHON_VERSION=$(yq eval '.Python' ./config.yaml)
-    CUDA_VERSION="11.7"   #$(yq eval '.CUDA' ./config.yaml)
-    PYTHON_VERSION="3.9"
+    CUDA_VERSION="11.6"   #$(yq eval '.CUDA' ./config.yaml)
+    PYTHON_VERSION="3.7"
 
     # Print the extracted values
     echo "PyTorch Version: $PYTORCH_VERSION"
@@ -70,7 +70,8 @@ resource "aws_instance" "ec2" {
 
 
       echo "Building pyton virtual environment...."
-      sudo python3.9 -m venv auto_env
+      sudo python3.7 -m venv auto_env
+
       cd auto_env/bin/
       source activate
       echo "end of the pyton virtual environment..........................
@@ -78,7 +79,7 @@ resource "aws_instance" "ec2" {
       .................................................."
 
       # Install PyTorch version
-      sudo pip install torch==2.0.0+cu117 torchvision==0.15.1+cu117 torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu117
+      sudo pip install torch==1.13.0+cu116 -f https://download.pytorch.org/whl/torch_stable.html
       # CUDA 11.3
     
       #pip install "torch==1.12"

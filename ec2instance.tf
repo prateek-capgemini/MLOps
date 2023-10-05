@@ -32,8 +32,7 @@ resource "aws_instance" "ec2" {
 
     ############################################################
     echo "Installing Python virtual environment..."
-    sudo apt install python3-dev python3-venv -y
-    sudo apt install -y python3-dev python3-venv
+    sudo apt-get install python3.9-venv -y
 
     # Install yq if not already installed
     if ! command -v yq &> /dev/null; then
@@ -70,20 +69,10 @@ resource "aws_instance" "ec2" {
 
 
       echo "Building pyton virtual environment...."
-      sudo python3.7 -m venv auto_env
 
-      cd auto_env/bin/
-      source activate
-      echo "end of the pyton virtual environment..........................
-      .....................................................
-      .................................................."
-
-      # Install PyTorch version
-      sudo pip install torch==1.13.0+cu116 -f https://download.pytorch.org/whl/torch_stable.html
-      # CUDA 11.3
-    
-      #pip install "torch==1.12"
-
+      python3 -m venv auto_env
+      source auto_env/bin/activate
+      sudo pip install torch==2.0.0+cu117 torchvision==0.15.1+cu117 torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu117
       deactivate
 
       # Install PyTorch version

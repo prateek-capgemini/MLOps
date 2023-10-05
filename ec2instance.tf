@@ -60,7 +60,7 @@ resource "aws_instance" "ec2" {
       # Check NVIDIA GPU information after reboot
       echo "Checking NVIDIA GPU information after reboot..."
       nvidia-smi
-
+      python3 -m venv auto_env
       echo "Increasing Swap Space...."
       sudo fallocate -l 2G /swapfile
       sudo chmod 600 /swapfile
@@ -70,7 +70,7 @@ resource "aws_instance" "ec2" {
 
       echo "Building pyton virtual environment...."
 
-      python3 -m venv auto_env
+      #python3 -m venv auto_env
       source auto_env/bin/activate
       sudo pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
       deactivate

@@ -76,7 +76,7 @@ resource "aws_instance" "ec2" {
       .................................................."
 
       # Install PyTorch version
-      sudo su
+      
       if [ $CUDA_VERSION=="11.7" ]; then
         echo "Installing PYTorch version : 2.0"
         pip install torch==2.0.0+cu117 torchvision==0.15.1+cu117 torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu117
@@ -118,36 +118,6 @@ resource "aws_instance" "ec2" {
       echo "Running the torch validation script..."
       python3 ./userdata/torch_validation.py
     fi
-
-
-
-    # echo "Increase Swap Space...."
-    # sudo fallocate -l 2G /swapfile
-    # sudo chmod 600 /swapfile
-    # sudo mkswap /swapfile
-    # sudo swapon /swapfile
-
-    # echo "Building pyton virtual environment...."
-    # sudo python3 -m venv /auto_env
-    # cd /auto_env/bin/
-    # source activate
-    # echo "end of the pyton virtual environment..........................
-    # .....................................................
-    # .................................................."
-
-    # # Install PyTorch version
-    # echo "Installing PyTorch version 1.12"
-    # sudo su
-    # # CUDA 11.3
-    # pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
-    # #pip install "torch==1.12"
-
-    # deactivate
-    
-    # List available Ubuntu drivers and install the recommended driver
-    #echo "Listing available Ubuntu drivers and installing the recommended driver..."
-    #sudo modprobe nvidia
-    
  
     EOF
 

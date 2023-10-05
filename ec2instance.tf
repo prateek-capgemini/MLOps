@@ -77,22 +77,22 @@ resource "aws_instance" "ec2" {
 
       # Install PyTorch version
       
-      if [ $CUDA_VERSION==11.7 ]; then
+      if [ $CUDA_VERSION -eq 11.7 ]; then
         echo "Installing PYTorch version : 2.0"
         pip install torch==2.0.0+cu117 torchvision==0.15.1+cu117 torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu117
-      elif [ $CUDA_VERSION==11.6 ]; then
+      elif [ $CUDA_VERSION -eq 11.6 ]; then
         echo "Installing PYTorch version : 1.13"
         pip install torch==1.13.0+cu116 torchvision==0.14.0+cu116 torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cu116
-      elif [ $CUDA_VERSION==11.3 ]; then
+      elif [ $CUDA_VERSION -eq 11.3 ]; then
         echo "Installing PYTorch version : 1.12"
         pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
-      elif [ $CUDA_VERSION==10.2 ]; then
+      elif [ $CUDA_VERSION -eq 10.2 ]; then
         echo "Installing PYTorch version : 1.11"
         pip install torch==1.11.0+cu102 torchvision==0.12.0+cu102 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu102
-      elif [ $CUDA_VERSION==10.1 ]; then
+      elif [ $CUDA_VERSION -eq 10.1 ]; then
         echo "Installing PYTorch version : 1.10"
         pip install torch==1.10.0+cu101 torchvision==1.10.0+cu101 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu101
-      elif [ $CUDA_VERSION==10.0 ]; then
+      elif [ $CUDA_VERSION -eq 10.0 ]; then
         echo "Installing PYTorch version : 1.9"
         pip install torch==1.9.0+cu102 torchvision==0.10.0+cu102 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
       else

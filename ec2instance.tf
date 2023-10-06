@@ -30,18 +30,10 @@ resource "aws_instance" "ec2" {
     echo "Listing available Ubuntu drivers and installing the recommended driver..."
     sudo modprobe nvidia
 
-    # Install yq if not already installed
-    if ! command -v yq &> /dev/null; then
-      echo "yq is not installed. Installing..."
-      sudo apt update
-      sudo snap install yq
-      sudo apt update
-    fi
-
     # Extract specific values from the YAML file
-    PYTORCH_VERSION=2.0 #$(yq eval '.Pytorch' ./config.yaml)
-    PYTHON_VERSION=3.10  #$(yq eval '.Python' ./config.yaml)
-    CUDA_VERSION=11.7    #$(yq eval '.CUDA' ./config.yaml)
+    PYTORCH_VERSION=2.0 
+    PYTHON_VERSION=3.10
+    CUDA_VERSION=11.7
 
     # Print the extracted values
     echo "PyTorch Version: $PYTORCH_VERSION"

@@ -30,7 +30,6 @@ resource "aws_instance" "ec2" {
     echo "Listing available Ubuntu drivers and installing the recommended driver..."
     sudo modprobe nvidia
 
-    ###############################################################################################
     # Install yq if not already installed
     if ! command -v yq &> /dev/null; then
       echo "yq is not installed. Installing..."
@@ -71,10 +70,8 @@ resource "aws_instance" "ec2" {
       sudo swapon /swapfile
 
       echo "end of the pyton virtual environment..........................
-      .....................................................
-      .................................................."
-
-      ################################################################
+      ....................................................................
+      ...................................................................>"
 
       # Check if the desired_version matches one of the specified versions
       if [ "$CUDA_VERSION" == "11.7" ] || [ "$CUDA_VERSION" == "11.6" ] || [ "$CUDA_VERSION" == "11.3" ] || [ "$CUDA_VERSION" == "10.2" ] || [ "$CUDA_VERSION" == "10.1" ] || [ "$CUDA_VERSION" == "10.0" ]; then
@@ -100,20 +97,7 @@ resource "aws_instance" "ec2" {
       else
         echo "Unsupported PyTorch version: $PYTORCH_VERSION"
       fi    
-
-      ################################################################
     fi
-
-    # Display the torch installed version
-    echo "Installed torch version"
-    pip show torch | grep Version
-    python --version
-    python3 --version
-
-
-    ###############################################################################################
-    
- 
     EOF
 
   tags = {

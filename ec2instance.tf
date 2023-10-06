@@ -40,9 +40,9 @@ resource "aws_instance" "ec2" {
     fi
 
     # Extract specific values from the YAML file
-    PYTORCH_VERSION=1.12 #$(yq eval '.Pytorch' ./config.yaml)
+    PYTORCH_VERSION=1.13 #$(yq eval '.Pytorch' ./config.yaml)
     PYTHON_VERSION=3.10  #$(yq eval '.Python' ./config.yaml)
-    CUDA_VERSION=11.3    #$(yq eval '.CUDA' ./config.yaml)
+    CUDA_VERSION=11.6    #$(yq eval '.CUDA' ./config.yaml)
 
     # Print the extracted values
     echo "PyTorch Version: $PYTORCH_VERSION"

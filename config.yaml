@@ -1,4 +1,4 @@
-Instance_Name: "test_gpu_instance"
+Instance_Name: "test_gpu_instance #2"
 Instance_Type: "t2.medium"
 Ami_Id: "ami-03f65b8614a860c29"
 #Ami_Id: "ami-0f5ee92e2d63afc18"

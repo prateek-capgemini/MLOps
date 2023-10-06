@@ -5,4 +5,4 @@ VALID_CUDA_VERSIONS = ["11.7", "11.6", "11.3", "10.2", "10.1", "10.0"]
 
 # Time perioad
 START_DATE = "2023-08-01"
-END_DATE = "2023-09-23"
+END_DATE = "2023-10-23"
